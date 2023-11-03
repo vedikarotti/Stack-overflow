@@ -18,7 +18,7 @@ export const signup = async (req, res) => {
     });
     const token = jwt.sign(
       { email: newUser.email, id: newUser._id } /*id*/,
-      "test",
+      process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
@@ -43,13 +43,13 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { email: newUser.email, id: newUser._id } /*id*/,
-      "test",
+      { email: existinguser.email, id: existinguser._id } /*id*/,
+      process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
     );
-    res.status(200).json({ result: newUser, token });
+    res.status(200).json({ result: existinguser, token });
   } catch (error) {
     res.status(500).json("Something went wrong... during login");
   }
